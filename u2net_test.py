@@ -12,7 +12,7 @@ from torchvision import transforms#, utils
 import numpy as np
 from PIL import Image
 import glob
-
+import click
 from data_loader import RescaleT
 from data_loader import ToTensor
 from data_loader import ToTensorLab
@@ -51,14 +51,16 @@ def save_output(image_name,pred,d_dir):
 
     imo.save(d_dir+imidx+'.png')
 
-def main():
+@click.command()
+@click.option('--model_name', default='u2net')
+def main(model_name):
 
     # --------- 1. get image path and name ---------
-    model_name='u2net'#u2netp
+    # model_name='u2net'#u2netp
 
 
 
-    image_dir = os.path.join(os.getcwd(), 'test_data', 'test_images')
+    image_dir = os.path.join(os.getcwd(), 'test_data', 'MSRA')
     prediction_dir = os.path.join(os.getcwd(), 'test_data', model_name + '_results' + os.sep)
     model_dir = os.path.join(os.getcwd(), 'saved_models', model_name, model_name + '.pth')
 
@@ -85,11 +87,11 @@ def main():
         print("...load U2NEP---4.7 MB")
         net = U2NETP(3,1)
 
-    if torch.cuda.is_available():
-        net.load_state_dict(torch.load(model_dir))
-        net.cuda()
-    else:
-        net.load_state_dict(torch.load(model_dir, map_location='cpu'))
+    # if torch.cuda.is_available():
+    #     net.load_state_dict(torch.load(model_dir))
+    #     net.cuda()
+    # else:
+    net.load_state_dict(torch.load(model_dir, map_location='cpu'))
     net.eval()
 
     # --------- 4. inference for each image ---------
