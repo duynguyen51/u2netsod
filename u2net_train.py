@@ -70,7 +70,7 @@ def main(model_name, img_dir, retrain, weight, model_dir):
 
     epoch_start = 0
     epoch_num = 500
-    batch_size_train = 12
+    batch_size_train = 20
     batch_size_val = 1
     train_num = 4000
     val_num = 500
